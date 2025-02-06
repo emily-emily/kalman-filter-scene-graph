@@ -56,11 +56,19 @@ Algorithm steps
 
 # Glossary
 
-**Dynamic Scene Graph Generation**  
-**Panoptic Video Scene Graph Generation (PVSGG)**  
-**Scene Graph Generation (SGG)**  
-**Spatio-Temporal Scene Graph Generation (ST-SGG)**  
-**Video Scene Graph Generation (VidSGG)**
+| Term | Abbreviation |
+| ---- | ------------ |
+| | Dynamic Scene Graph Generation |
+| GSS | Graph State Space |
+| PVSGG | Panoptic Video Scene Graph Generation |
+| SGG | Scene Graph Generation |
+| ST-SGG | Spatio-Temporal Scene Graph Generation |
+| ST-GNN | Spatio-Temporal Graph Neural Network |
+| Vid-SGG | Video Scene Graph Generation |
+
+**Cardinality (of a set)**: the number of (unique) elements in the set.
+
+**Topology (of a graph)**: describes the way nodes and edges are arranged in a graph.
 
 # Literature Review
 
@@ -75,7 +83,8 @@ Algorithm steps
 ## Kalman Filter
 
 **SAMURAI: Adapting Segment Anything Model for Zero-Shot Visual Tracking with Motion-Aware Memory**  
-[https://arxiv.org/abs/2411.11922](https://arxiv.org/abs/2411.11922)  
+[https://arxiv.org/abs/2411.11922](https://arxiv.org/abs/2411.11922)
+
 SAM 2 (Segment Anything Model 2\) is a model with strong object segmentation capabilities. SAMurai builds on it to extend its performance in object tracking.
 
 The architecture of SAM 2 is vaguely as follows. The prompt encoder takes encodes prompts in the form of sparse (eg. points, bounding boxes) or dense (eg. masks) descriptions of objects in the image. The memory attention layer performs self-attention with these embeddings and cross-attention with embeddings and the memory bank. The mask decoder takes the result from the memory attention layer to generate a set of predicted masks each with a corresponding mask score (confidence in the mask), and object score (confidence in the object’s existence). We select the prediction with the best score. The memory encoder generates a memory from the selected mask and stores it in the memory bank.
@@ -85,10 +94,70 @@ SAMurai adds a motion modeling unit before selecting a mask prediction. This uni
 **Graph Kalman Filters**  
 [https://arxiv.org/abs/2303.12021](https://arxiv.org/abs/2303.12021)
 
+Introduces Graph KF (Kalman Filter), a graph-based formulation of KF where states and inputs are in graph spaces.
+
+Defining KF
+$$
+\begin{align}
+    \text{Basic KF}:=\begin{cases}
+        \mathbf h_t = \mathbf F \mathbf h_{t-1} + \mathbf G \mathbf x_{t-1} + \eta_{t-1} \\
+        \mathbf y_t = \mathbf H \mathbf h_t + v_t
+    \end{cases}
+\end{align}
+$$
+
+- KF for discrete-time, time-variant (??), linear systems.
+
+$$
+\begin{align}
+    \text{Generalization of KF}:= \begin{cases}
+        \mathbf h_t = f_{ST}(\mathbf h_{t-1}, \mathbf x_{t-1}) + \eta_{t-1} \\
+        \mathbf y_t = f_{RO}(\mathbf h_t) + v_t
+    \end{cases}
+\end{align}
+$$
+
+- Extended KF (EKF): nonlinear formulation of KF.
+- ST: State Transition
+- RO: ReadOut
+- We require the first-order Taylor approximation of the functions:
+    - $f_{ST} (\mathbf h, \mathbf x_{t-1}) \approx f_{ST}(\mathbf h_{t-1}^+, \mathbf x_{t-1}) + \underbrace{\nabla_{\mathbf h} f_{ST}(\mathbf h_{t-1}^+, \mathbf x_{t-1})}_{\mathbf F_{t-1}}(\mathbf h - \mathbf h_{t-1}^+)$
+    - $f_{RO} (\mathbf h) \approx f_{ST}(\mathbf h_t^-) + \underbrace{\nabla_{\mathbf h} f_{RO}(\mathbf h_t^-)}_{\mathbf H_{t-1}}(\mathbf h - \mathbf h_t^-)$
+
+Extending to graphs
+- In this paper, graphs represent networks of sensors. So nodes are sensors that can have readings (attributes), and they're connected by edges that mean something (??).
+- Variables
+    - $\mathbf x_t \in \mathcal X$ is the initial input graph.
+        - $V(\mathbf x_t) \in \mathbb V_{\mathbf x}$ node set of $\mathbf x_t$.
+        - $\mathbf A(\mathbf x_t)$ edge set represented as an adjacency matrix.
+    - $\mathbf h_t \in \mathcal H$ system state graphs.
+    - $\mathbf y_t$ output graph (prediction).
+        - Note that in the context of applying KF to an existing Graph process, we call $\hat{\mathbf{y}}_t$ the prediction and $\mathbf y_t$ the observed graph.
+    - $s(\mathbf h_t)$ signals (??).
+    - $\{\eta_t\}_t$ noise for states.
+    - $\{v_t\}_t$ noise for outputs.
+- The model (GSS is graph state space)
+$$
+\begin{align}
+    \text{GSS Model}:= \begin{cases}
+        \mathbf h_t = f_\theta(\mathbf h_{t-1}, f_\vartheta(\mathbf x_{t-1}), \eta_{t-1}) \\
+        \mathbf y_t = f_\psi(s(\mathbf h_t), v_t)
+    \end{cases}
+\end{align}
+$$
+- Notes
+    - The graph topology may be different across time steps but we assume there is at least one shared node between time steps: $V(\mathbf x_t) \cap V(\mathbf x_t') \neq \emptyset$.
+    - Assume the set of all nodes $\mathbb V_{\mathbf x} = \bigcup_t V(\mathbf x_t)$ is finite.
+    - Input graphs can have node features like sensor readings.
+- Assumptions
+    - $\mathbb V_{\mathbf y} = \mathbb V_{\mathbf x} = \mathbb V_{\mathbf h}$. The input, state, and output graphs have nodes from the same node set.
+    - $\mathbf A (\mathbf y_t) = \mathbf A (\mathbf h_t)$ or $\mathbf A (\mathbf y_t) = \mathbf A (\mathbf x_{t-1})$. The topology of the output graph matches that of the state or the input.
 
 # Empirical Exploration
 
 ## Directly Prompting LLMs
+
+See the notebook `LLM_based_SGG_Baseline.ipynb`.
 
 **Method**  
 LLMs can be prompted out of the box to generate scene graphs. To explore the capabilities of an LLM-only system, I prompted Gemini to generate scene graphs for frames of a video.
@@ -121,5 +190,12 @@ DSGG
 
 # Resources and Links
 
-Google Colab Notebook [https://colab.research.google.com/drive/18MUZArlQFvTPRz-B4Wz0t79cz\_aji8fl](https://colab.research.google.com/drive/18MUZArlQFvTPRz-B4Wz0t79cz_aji8fl)  
-ZipNeRF [https://jonbarron.info/zipnerf/](https://jonbarron.info/zipnerf/)  
+Datasets
+- [ZipNeRF](https://jonbarron.info/zipnerf/)
+
+Kalman Filter
+- [Introduction to Kalman Filter YouTube (Dr. Shane Ross)](https://www.youtube.com/watch?v=HCd-leV8OkU)
+- [Graph Kalman Filter YouTube (Daniele Zambon)](https://www.youtube.com/watch?v=Os1yn9teSrk)
+
+Miscellaneous
+- [Mcgill Temporal Graph Reading Group](https://shenyanghuang.github.io/rg.html)
