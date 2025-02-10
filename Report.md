@@ -167,7 +167,7 @@ For this exploration, I used Gemini Flash through the Gemini API to generate a s
 Note that there are some hoops to jump through when dealing with scene graphs with Gemini – the model seems to return scaled coordinates between (0, 1000\) in the form (Y, X). As such, any coordinates returned must be rescaled before plotting.
 
 **Results**  
-Below I have included the scene graphs produced for 3 frames of a sample video taken from ZipNeRF. It is a video of a static scene.
+Below I have included the scene graphs produced for 3 frames of a sample video taken from ZipNeRF. It is a video of a static scene. For each image, the API request for Gemini to generate the scene graph takes around 8 seconds, and drawing the bounding boxes and relationships takes a negligible amount of time.
 
 ![Sample frame 1](img/frame1.png)
 ![Sample frame 2](img/frame2.png)

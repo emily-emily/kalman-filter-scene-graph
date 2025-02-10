@@ -1,0 +1,647 @@
+[
+  {
+    "objects": {
+      "window_1": {
+        "category": 258,
+        "bounding_box": [
+          0,
+          100,
+          480,
+          570
+        ],
+        "attributes": [
+          66,
+          81
+        ]
+      },
+      "blinds_1": {
+        "category": 21,
+        "bounding_box": [
+          0,
+          100,
+          280,
+          570
+        ],
+        "attributes": [
+          66,
+          116
+        ]
+      },
+      "table_1": {
+        "category": 227,
+        "bounding_box": [
+          440,
+          0,
+          750,
+          290
+        ],
+        "attributes": [
+          142,
+          100,
+          117
+        ]
+      },
+      "chair_1": {
+        "category": 49,
+        "bounding_box": [
+          410,
+          190,
+          580,
+          310
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "chair_2": {
+        "category": 49,
+        "bounding_box": [
+          470,
+          230,
+          880,
+          420
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "chair_3": {
+        "category": 49,
+        "bounding_box": [
+          660,
+          0,
+          999,
+          340
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "cup_1": {
+        "category": 66,
+        "bounding_box": [
+          450,
+          120,
+          500,
+          160
+        ],
+        "attributes": [
+          95,
+          113
+        ]
+      },
+      "cup_2": {
+        "category": 66,
+        "bounding_box": [
+          460,
+          150,
+          510,
+          180
+        ],
+        "attributes": [
+          13,
+          113
+        ]
+      },
+      "bottle_1": {
+        "category": 27,
+        "bounding_box": [
+          490,
+          10,
+          600,
+          50
+        ],
+        "attributes": [
+          13,
+          91
+        ]
+      },
+      "counter_1": {
+        "category": 63,
+        "bounding_box": [
+          380,
+          550,
+          999,
+          999
+        ],
+        "attributes": [
+          28,
+          106
+        ]
+      },
+      "shelf_1": {
+        "category": 195,
+        "bounding_box": [
+          30,
+          770,
+          380,
+          940
+        ],
+        "attributes": [
+          142,
+          140
+        ]
+      },
+      "picture_1": {
+        "category": 160,
+        "bounding_box": [
+          80,
+          630,
+          240,
+          730
+        ],
+        "attributes": [
+          142
+        ]
+      }
+    },
+    "relations": [
+      [
+        "blinds_1",
+        "window_1",
+        40
+      ],
+      [
+        "table_1",
+        "chair_1",
+        51
+      ],
+      [
+        "table_1",
+        "chair_2",
+        51
+      ],
+      [
+        "table_1",
+        "chair_3",
+        51
+      ],
+      [
+        "cup_1",
+        "table_1",
+        40
+      ],
+      [
+        "cup_2",
+        "table_1",
+        40
+      ],
+      [
+        "bottle_1",
+        "table_1",
+        40
+      ],
+      [
+        "counter_1",
+        "shelf_1",
+        2
+      ],
+      [
+        "picture_1",
+        "counter_1",
+        40
+      ]
+    ]
+  },
+  {
+    "objects": {
+      "window_1": {
+        "category": 258,
+        "bounding_box": [
+          0,
+          70,
+          470,
+          520
+        ],
+        "attributes": [
+          81,
+          23,
+          139
+        ]
+      },
+      "blinds_1": {
+        "category": 21,
+        "bounding_box": [
+          0,
+          70,
+          280,
+          520
+        ],
+        "attributes": [
+          139,
+          76
+        ]
+      },
+      "table_1": {
+        "category": 227,
+        "bounding_box": [
+          448,
+          0,
+          780,
+          226
+        ],
+        "attributes": [
+          142,
+          100,
+          117
+        ]
+      },
+      "chair_1": {
+        "category": 49,
+        "bounding_box": [
+          480,
+          128,
+          740,
+          357
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "chair_2": {
+        "category": 49,
+        "bounding_box": [
+          650,
+          0,
+          999,
+          270
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "chair_3": {
+        "category": 49,
+        "bounding_box": [
+          408,
+          145,
+          581,
+          256
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "cup_1": {
+        "category": 66,
+        "bounding_box": [
+          445,
+          90,
+          490,
+          120
+        ],
+        "attributes": [
+          139,
+          100
+        ]
+      },
+      "cup_2": {
+        "category": 66,
+        "bounding_box": [
+          445,
+          60,
+          500,
+          90
+        ],
+        "attributes": [
+          13,
+          100
+        ]
+      },
+      "counter_1": {
+        "category": 63,
+        "bounding_box": [
+          405,
+          468,
+          999,
+          999
+        ],
+        "attributes": [
+          28,
+          6,
+          139
+        ]
+      },
+      "laptop_1": {
+        "category": 125,
+        "bounding_box": [
+          585,
+          748,
+          725,
+          999
+        ],
+        "attributes": [
+          139,
+          57
+        ]
+      },
+      "shelf_1": {
+        "category": 195,
+        "bounding_box": [
+          65,
+          730,
+          298,
+          880
+        ],
+        "attributes": [
+          142,
+          59
+        ]
+      },
+      "plants_1": {
+        "category": 165,
+        "bounding_box": [
+          300,
+          120,
+          440,
+          230
+        ],
+        "attributes": [
+          53,
+          63
+        ]
+      },
+      "plants_2": {
+        "category": 165,
+        "bounding_box": [
+          315,
+          360,
+          455,
+          480
+        ],
+        "attributes": [
+          53,
+          63
+        ]
+      },
+      "picture_1": {
+        "category": 160,
+        "bounding_box": [
+          87,
+          578,
+          257,
+          676
+        ],
+        "attributes": [
+          139,
+          142
+        ]
+      },
+      "outside_1": {
+        "category": 100,
+        "bounding_box": [
+          290,
+          170,
+          430,
+          480
+        ],
+        "attributes": [
+          184,
+          99
+        ]
+      }
+    },
+    "relations": [
+      [
+        "blinds_1",
+        "window_1",
+        19
+      ],
+      [
+        "cup_1",
+        "table_1",
+        40
+      ],
+      [
+        "cup_2",
+        "table_1",
+        40
+      ],
+      [
+        "chair_1",
+        "table_1",
+        53
+      ],
+      [
+        "chair_2",
+        "table_1",
+        53
+      ],
+      [
+        "chair_3",
+        "table_1",
+        53
+      ],
+      [
+        "laptop_1",
+        "counter_1",
+        40
+      ],
+      [
+        "shelf_1",
+        "counter_1",
+        40
+      ],
+      [
+        "plants_1",
+        "window_1",
+        9
+      ],
+      [
+        "plants_2",
+        "window_1",
+        9
+      ],
+      [
+        "picture_1",
+        "wall_1",
+        40
+      ],
+      [
+        "outside_1",
+        "window_1",
+        42
+      ],
+      [
+        "counter_1",
+        "wall_1",
+        40
+      ]
+    ]
+  },
+  {
+    "objects": {
+      "window_1": {
+        "category": 258,
+        "bounding_box": [
+          0,
+          0,
+          480,
+          480
+        ],
+        "attributes": [
+          81,
+          23,
+          139
+        ]
+      },
+      "blinds_1": {
+        "category": 21,
+        "bounding_box": [
+          0,
+          0,
+          300,
+          470
+        ],
+        "attributes": [
+          139,
+          130,
+          6
+        ]
+      },
+      "chairs_1": {
+        "category": 49,
+        "bounding_box": [
+          310,
+          250,
+          410,
+          330
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "chairs_2": {
+        "category": 49,
+        "bounding_box": [
+          480,
+          80,
+          880,
+          290
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "chairs_3": {
+        "category": 49,
+        "bounding_box": [
+          330,
+          330,
+          420,
+          400
+        ],
+        "attributes": [
+          142,
+          110
+        ]
+      },
+      "table_1": {
+        "category": 227,
+        "bounding_box": [
+          460,
+          0,
+          700,
+          160
+        ],
+        "attributes": [
+          142,
+          100
+        ]
+      },
+      "kitchen_counter_1": {
+        "category": 63,
+        "bounding_box": [
+          400,
+          320,
+          999,
+          999
+        ],
+        "attributes": [
+          28,
+          66,
+          139
+        ]
+      },
+      "laptop_1": {
+        "category": 125,
+        "bounding_box": [
+          580,
+          640,
+          760,
+          920
+        ],
+        "attributes": [
+          109,
+          93
+        ]
+      },
+      "shelves_1": {
+        "category": 195,
+        "bounding_box": [
+          80,
+          660,
+          310,
+          840
+        ],
+        "attributes": [
+          142,
+          118
+        ]
+      },
+      "plants_1": {
+        "category": 165,
+        "bounding_box": [
+          270,
+          60,
+          400,
+          170
+        ],
+        "attributes": [
+          53,
+          126
+        ]
+      }
+    },
+    "relations": [
+      [
+        "blinds_1",
+        "window_1",
+        40
+      ],
+      [
+        "chairs_1",
+        "table_1",
+        51
+      ],
+      [
+        "chairs_2",
+        "table_1",
+        51
+      ],
+      [
+        "laptop_1",
+        "kitchen_counter_1",
+        40
+      ],
+      [
+        "shelves_1",
+        "kitchen_counter_1",
+        9
+      ],
+      [
+        "plants_1",
+        "window_1",
+        30
+      ]
+    ]
+  }
+]
