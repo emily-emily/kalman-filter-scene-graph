@@ -179,7 +179,8 @@ SGG
 
 - It can draw rough bounding boxes around objects, though they are often not very accurate.  
 - It does not identify all objects in the image, though perhaps a more refined prompt could extract more objects.  
-- Relationships between objects are sometimes correctly identified but don’t always make sense (eg. “cabinet on counter”, when the cabinet is clearly under the counter).
+- Relationships between objects are sometimes correctly identified but don’t always make sense (eg. "cabinet on counter", when the cabinet is clearly under the counter).
+- Relationships are not consistent (eg. "counter adjacent to counter" and "counter touching counter" in frames 1 and 2).
 
 DSGG
 
@@ -187,6 +188,51 @@ DSGG
 - Expanding on the previous point, objects are not consistently identified in the same way either; the cabinets are a mess.
 
 **Next Steps**
+
+## Creating a short video
+
+**Method**
+
+**Results**
+
+- The model often references "wall" in relationships (eg. picture on wall), but doesn't identify the wall as an object.
+
+## Improving Consistency
+
+We discussed two possible routes for improving consistency between frames:
+1. Provide Gemini some context and let it try to smooth things out on its own.
+2. Keep a state external to Gemini and try to smooth things out independently from Gemini.
+
+### LLM-based smoothing
+
+**Method**
+
+I provide the previous scene graph as context for Gemini to try and stay consistent with the previous frame.
+
+**Results**
+
+![Sample frame 1](img/frame1_prev_sg.png)
+![Sample frame 2](img/frame2_prev_sg.png)
+![Sample frame 3](img/frame3_prev_sg.png)
+
+- The relationships seems to be better to some degree, but not perfect (eg. "blinds hanging on window" and "blinds on window" in frames 1 and 2).
+- If anything, I think this might've confused the LLM. Bounding boxes are worse and it looks less accurate overall.
+
+Perhaps identifying each object, cross-referencing the ids of the previous scene graph, and smoothing out the relation ids is too complex a task to handle well.
+- There is no way to know what "chair_2" refers to in the image, especially if it gets mislabelled as an entirely different object.
+
+# Todo
+
+- Investigate why some relationships are missing at the end of the video
+- Two options to try smoothing things out:
+    - Let Gemini smooth things out
+        - Provide context of the previous $x$ graphs for it to keep in mind as it generates the next frame
+        - Generate everything and try to smooth it out all together?
+    - Keep a state and do computations on our end to smooth things out (let Gemini continue generating the scene graph frame by frame)
+        - Finish reading Graph KF paper
+        - Figure out how to apply it 😨
+- quantitative measurement of how similar scene graphs are
+- sg, image+sg, img
 
 # Resources and Links
 
