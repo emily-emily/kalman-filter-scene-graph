@@ -3,3 +3,5 @@ google-genai
 pillow
 opencv-python
 matplotlib
+networkx
+scipy

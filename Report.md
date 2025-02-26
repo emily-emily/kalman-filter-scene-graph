@@ -1,4 +1,7 @@
-# Application of Kalman Filter to LLM-Based Dynamic Scene Graph Generation
+Application of Kalman Filter to LLM-Based Dynamic Scene Graph Generation
+==
+
+Emily Yu
 
 # Abstract
 
@@ -217,13 +220,37 @@ I provide the previous scene graph as context for Gemini to try and stay consist
 
 - The relationships seems to be better to some degree, but not perfect (eg. "blinds hanging on window" and "blinds on window" in frames 1 and 2).
 - If anything, I think this might've confused the LLM. Bounding boxes are worse and it looks less accurate overall.
+- It looks like the LLM is just refusing to move bounding boxes after the first frame.
 
 Perhaps identifying each object, cross-referencing the ids of the previous scene graph, and smoothing out the relation ids is too complex a task to handle well.
 - There is no way to know what "chair_2" refers to in the image, especially if it gets mislabelled as an entirely different object.
 
+# Quantifying distance between scene graphs
+
+Graph Edit Distance (GED)
+
+- Count the number of operations to get from one graph to the other.
+- Elementary operations: insert/delete/edit vertex, insert/delete/edit edge.
+- Considerations for scene graphs:
+    - Complex nodes: a node can have a lot of different things attached to it, including label, bounding box.
+        - Maybe represent attributes as a special set of nodes and draw edges between them and object nodes (many to many).
+        - Label can be node edit.
+        - Bounding box not sure... IoU from 0 to 1?
+
+SPICE
+
+- https://arxiv.org/pdf/1607.08822
+- F-score: basically flattens the graph into a set of tuples and finds the F-score of it
+
+Ideas
+
+- Do the whole graph except bounding boxes
+- Bounding boxes separately (eg. look at how many things could be matched, and something about how well they match too)
+
+Recall
+
 # Todo
 
-- Investigate why some relationships are missing at the end of the video
 - Two options to try smoothing things out:
     - Let Gemini smooth things out
         - Provide context of the previous $x$ graphs for it to keep in mind as it generates the next frame
@@ -231,8 +258,16 @@ Perhaps identifying each object, cross-referencing the ids of the previous scene
     - Keep a state and do computations on our end to smooth things out (let Gemini continue generating the scene graph frame by frame)
         - Finish reading Graph KF paper
         - Figure out how to apply it 😨
-- quantitative measurement of how similar scene graphs are
-- sg, image+sg, img
+- Identify a quantitative measurement of how similar scene graphs are
+- Add to the Gemini-based context approach with these parameters (and compare them):
+    - Previous scene graph only (done)
+    - Previous image only
+    - Previous image and scene graph
+
+
+
+to figure out
+- is it possible to feed a video into gemini?
 
 # Resources and Links
 
