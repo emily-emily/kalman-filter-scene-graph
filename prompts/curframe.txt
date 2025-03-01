@@ -1,0 +1,28 @@
+Return a scene graph for this image in a JSON format. You must adhere to
+the following rules:
+1. Do not include any additional text.
+2. Use this JSON format:
+{
+    "objects": {
+        "object_id1": {
+            "category": <object_category_id>,
+            "bounding_box": [ymin, xmin, ymax, xmax],
+            "attributes": [<attr_id1>, <attr_id2>]
+        },
+        ...
+    },
+    "relations": [
+        ["object_id1", "object_id2", <relation_id>],
+        ...
+    ]
+}
+3. You may create object_ids by using a word or short phrase to describe
+the object with a number, joined by underscores (eg. "book_1"). Object ids
+must be unique.
+4. The bounding box coordinates must be accurate.
+5. object_category_id, attr_id1, and relation_id must refer to the ids
+given in the id bank under the objects, attributes, and relations sections
+respectively. All ids must correspond to a valid id in the given id bank
+and accurately describe the object, attribute, or relation in the image.
+6. object_ids in relations must reference a valid object in "objects".
+7. Do not include trailing commas.
