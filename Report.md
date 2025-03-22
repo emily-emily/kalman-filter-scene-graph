@@ -236,6 +236,7 @@ Graph Edit Distance (GED)
         - Maybe represent attributes as a special set of nodes and draw edges between them and object nodes (many to many).
         - Label can be node edit.
         - Bounding box not sure... IoU from 0 to 1?
+- `NetworkX`: `graph_edit_distance` is too slow
 
 SPICE
 
