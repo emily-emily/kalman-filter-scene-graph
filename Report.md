@@ -156,11 +156,17 @@ $$
     - $\mathbb V_{\mathbf y} = \mathbb V_{\mathbf x} = \mathbb V_{\mathbf h}$. The input, state, and output graphs have nodes from the same node set.
     - $\mathbf A (\mathbf y_t) = \mathbf A (\mathbf h_t)$ or $\mathbf A (\mathbf y_t) = \mathbf A (\mathbf x_{t-1})$. The topology of the output graph matches that of the state or the input.
 
+# A Quantitative Measure of Performance
+
+To compare the performance of different approaches, we need a quantitative measure that can capture how well the model does. This probably means something along the lines of how good is the scene graph, and how consistent are the scene graphs across frames. Notes relevant to this exploration are [here](GraphDistance.md).
+
 # Empirical Exploration
+
+This section explores how well LLMs do out-of-the-box in scene graph generation tasks to serve as a baseline in terms of performance.
 
 ## Directly Prompting LLMs
 
-See the notebook `LLM_based_SGG_Baseline.ipynb`.
+See the notebook [here](LLM_based_SGG_Baseline.ipynb).
 
 **Method**  
 LLMs can be prompted out of the box to generate scene graphs. To explore the capabilities of an LLM-only system, I prompted Gemini to generate scene graphs for frames of a video.
@@ -224,31 +230,6 @@ I provide the previous scene graph as context for Gemini to try and stay consist
 
 Perhaps identifying each object, cross-referencing the ids of the previous scene graph, and smoothing out the relation ids is too complex a task to handle well.
 - There is no way to know what "chair_2" refers to in the image, especially if it gets mislabelled as an entirely different object.
-
-# Quantifying distance between scene graphs
-
-Graph Edit Distance (GED)
-
-- Count the number of operations to get from one graph to the other.
-- Elementary operations: insert/delete/edit vertex, insert/delete/edit edge.
-- Considerations for scene graphs:
-    - Complex nodes: a node can have a lot of different things attached to it, including label, bounding box.
-        - Maybe represent attributes as a special set of nodes and draw edges between them and object nodes (many to many).
-        - Label can be node edit.
-        - Bounding box not sure... IoU from 0 to 1?
-- `NetworkX`: `graph_edit_distance` is too slow
-
-SPICE
-
-- https://arxiv.org/pdf/1607.08822
-- F-score: basically flattens the graph into a set of tuples and finds the F-score of it
-
-Ideas
-
-- Do the whole graph except bounding boxes
-- Bounding boxes separately (eg. look at how many things could be matched, and something about how well they match too)
-
-Recall
 
 # Todo
 
