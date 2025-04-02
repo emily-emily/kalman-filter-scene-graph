@@ -50,7 +50,7 @@ def denormalize(bounding_box, width, height):
     res = [x1/1000 * width, y1/1000 * height, x2/1000 * width, y2/1000 * height]
     return (int(z) for z in res)
 
-def plot_bounding_boxes(img, object_tuples, color=None, font_size=None, line_width=None):
+def plot_bounding_boxes(img, graph, color=None, font_size=None, line_width=None):
     """
     Plots bounding boxes on an image with markers for each noun phrase, using PIL, normalized coordinates, and different colors.
 
@@ -70,11 +70,11 @@ def plot_bounding_boxes(img, object_tuples, color=None, font_size=None, line_wid
 
     draw = ImageDraw.Draw(img)
 
-    for object_id, bounding_box in object_tuples:
+    for object_id, obj in graph["objects"].items():
         _color = colors[random.randint(0, len(colors)-1)] if color is None else color
 
         # denormalize coordinates (see helper)
-        abs_x1, abs_y1, abs_x2, abs_y2 = denormalize(bounding_box, width, height)
+        abs_x1, abs_y1, abs_x2, abs_y2 = denormalize(obj["bounding_box"], width, height)
 
         # draw bounding box
         draw.rectangle(
@@ -84,7 +84,7 @@ def plot_bounding_boxes(img, object_tuples, color=None, font_size=None, line_wid
         )
 
         # draw text
-        draw.text((abs_x1 + 8, abs_y1 + 6), object_id, fill=_color, font_size=font_size)
+        draw.text((abs_x1 + 8, abs_y1 + 6), f"{obj['category']} ({object_id})", fill=_color, font_size=font_size)
 
 def center(bounding_box):
     """
@@ -98,7 +98,7 @@ def center(bounding_box):
     x1, y1, x2, y2 = bounding_box
     return (x1 + x2) // 2, (y1 + y2) // 2
 
-def draw_relationships(image, graph, label="full", color=None, font_size=None, line_width=None, verbose=False):
+def draw_relationships(image, graph, label="full", color=None, font_size=None, line_width=None, verbose=False, with_ids=True):
     """
     Draws relationship lines on an image between bounding boxes.
 
@@ -126,7 +126,10 @@ def draw_relationships(image, graph, label="full", color=None, font_size=None, l
     draw = ImageDraw.Draw(image)
 
     for i, (obj_id1, obj_id2, relation_id) in enumerate(graph["relations"]):
-        relation_name = id_bank["predicates"][relation_id][1]
+        if with_ids:
+            relation_name = id_bank["predicates"][relation_id][1]
+        else:
+            relation_name = relation_id
 
         if obj_id1 not in graph["objects"] or obj_id2 not in graph["objects"]:
             if verbose:
@@ -150,23 +153,30 @@ def draw_relationships(image, graph, label="full", color=None, font_size=None, l
         mid_y = (center1[1] + center2[1]) // 2
 
         # get categories
-        c1 = graph["objects"][obj_id1]["category"]
-        c2 = graph["objects"][obj_id2]["category"]
+        if with_ids:
+            c1 = graph["objects"][obj_id1]["category"]
+            c2 = graph["objects"][obj_id2]["category"]
 
-        if c1 >= len(id_bank["objects"]) or c2 >= len(id_bank["objects"]):
-            if verbose:
-                    if c1 >= len(id_bank["objects"]):
-                        print(f"Skipping relation {obj_id1} {relation_name} {obj_id2} because id {c1} not found in object bank")
-                    if c2 >= len(id_bank["objects"]):
-                        print(f"Skipping relation {obj_id1} {relation_name} {obj_id2} because id {c2} not found in object bank")
-            errors += 1
-            continue
+            if c1 >= len(id_bank["objects"]) or c2 >= len(id_bank["objects"]):
+                if verbose:
+                        if c1 >= len(id_bank["objects"]):
+                            print(f"Skipping relation {obj_id1} {relation_name} {obj_id2} because id {c1} not found in object bank")
+                        if c2 >= len(id_bank["objects"]):
+                            print(f"Skipping relation {obj_id1} {relation_name} {obj_id2} because id {c2} not found in object bank")
+                errors += 1
+                continue
+
+            category_name_1 = id_bank["objects"][obj_id1][1]
+            category_name_2 = id_bank["objects"][obj_id2][1]
+        else:
+            category_name_1 = graph["objects"][obj_id1]["category"]
+            category_name_2 = graph["objects"][obj_id2]["category"]
 
         # draw line connecting centers
         draw.line([center1, center2], fill=_color, width=line_width)
 
         # draw relation text
-        relation_text = f"{id_bank['objects'][c1][1]} {relation_name} {id_bank['objects'][c2][1]}" if label == "full" else relation_name
+        relation_text = f"{category_name_1} {relation_name} {category_name_2}" if label == "full" else relation_name
         draw.text((mid_x, mid_y), relation_text, fill=_color, font_size=font_size)
     
     if verbose and errors > 0:

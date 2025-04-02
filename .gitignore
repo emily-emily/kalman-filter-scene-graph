@@ -1,3 +1,7 @@
 .env
 .venv
 img/*.mp4
+**/output/*
+samjam/experiment_inputs
+*.zip
+**/__pycache__/*
