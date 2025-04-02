@@ -6,6 +6,8 @@ Scene graphs are generated for an image to describe the objects and relationship
 
 This project was developed on Windows using Git Bash.
 
+Please see my [report](Report.md) for technical notes on progress and experiments.
+
 ## Local Setup
 
 Get a Gemini API key to `.env`:
