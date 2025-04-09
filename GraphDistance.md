@@ -112,3 +112,21 @@ ID-based measure
 
 next steps
 - hierarchical scene graphs - change the format to make the search space smaller
+
+# Hierarchical scene graph (tree) edit distance
+
+Zhang-Shasha (https://www.researchgate.net/publication/220618233_Simple_Fast_Algorithms_for_the_Editing_Distance_Between_Trees_and_Related_Problems)
+
+- Simple tree structure
+- Each node is defined to have one label (implemented as a string in `zss`)
+- Operations defined:
+    - Let A->B->C be a tree.
+    - Change a node: change its label
+        - A->X->C
+    - Insert a node
+        - A->X->B->C
+    - Delete a node
+        - A->C
+- Note that this does not enable moving subtrees.
+
+
