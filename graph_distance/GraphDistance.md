@@ -115,6 +115,16 @@ next steps
 
 # Hierarchical scene graph (tree) edit distance
 
+To reduce the search space, we consider scene graphs structured as trees. Given that trees are a subset of all graphs and have a more narrow definition, it should be easier to develop a good measure of distance between trees.
+
+Below are some existing algorithms for tree distance. They are considerably faster than graph edit distance, at least in the limited testing done in [the notebook](hierarchical_sg/HierarchicalSG.ipynb).
+
+The code relevant to hieriarchical tree distance is in `hierarchical_sg` from here.
+- `tests`: a collection of simple test scene graphs (as trees). See the readme for more info.
+- `HierarchicalSG.ipynb`: generating scene graphs in a tree form, and some exploratory stuff for calculating distance.
+
+## Existing algorithms for tree distance
+
 Zhang-Shasha (https://www.researchgate.net/publication/220618233_Simple_Fast_Algorithms_for_the_Editing_Distance_Between_Trees_and_Related_Problems)
 
 - Simple tree structure
@@ -144,7 +154,6 @@ RTED Robust Algorithm for TED (https://arxiv.org/abs/1201.0230)
 APTED (https://github.com/JoaoFelipe/apted) (https://dl.acm.org/doi/10.1145/2699485)
 
 
-additional ideas
+## Additional ideas
 - define custom cost function that allows for a lower cost subtree move given some combination of inserts/deletes
     - potentially compatible with RTED, APTED?
-
