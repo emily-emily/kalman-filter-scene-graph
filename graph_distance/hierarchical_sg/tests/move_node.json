@@ -1,0 +1,68 @@
+{
+  "id": 1,
+  "name": "kitchen",
+  "bbox": [0, 0, 100, 100],
+  "attributes": ["modern", "clean"],
+  "predicate": ["root"],
+  "children": [
+    {
+      "id": 2,
+      "name": "table",
+      "bbox": [10, 10, 30, 30],
+      "attributes": ["wooden", "round"],
+      "predicate": ["in"],
+      "children": [
+        {
+          "id": 3,
+          "name": "plate",
+          "bbox": [12, 12, 28, 28],
+          "attributes": ["white", "ceramic"],
+          "predicate": ["on"],
+          "children": [
+            {
+              "id": 8,
+              "name": "bellpepper",
+              "bbox": [16, 16, 24, 24],
+              "attributes": ["green"],
+              "predicate": ["on"],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "name": "apple",
+          "bbox": [15, 15, 25, 25],
+          "attributes": ["red"],
+          "predicate": ["on"],
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "counter",
+      "bbox": [10, 10, 20, 80],
+      "attributes": ["granite"],
+      "predicate": ["in"],
+      "children": [
+        {
+          "id": 6,
+          "name": "knife",
+          "bbox": [12, 12, 18, 18],
+          "attributes": ["sharp"],
+          "predicate": ["on"],
+          "children": []
+        },
+        {
+          "id": 7,
+          "name": "cutting board",
+          "bbox": [15, 15, 25, 25],
+          "attributes": ["wooden"],
+          "predicate": ["on"],
+          "children": []
+        }
+      ]
+    }
+  ]
+}
