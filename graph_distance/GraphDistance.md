@@ -129,4 +129,22 @@ Zhang-Shasha (https://www.researchgate.net/publication/220618233_Simple_Fast_Alg
         - A->C
 - Note that this does not enable moving subtrees.
 
+SuMoTED (https://www.sciencedirect.com/science/article/pii/S0167865516300642)
+
+- edit distance: minimum number of atomic local moves of subtrees
+- doesn't account for quality of edges or any detail in nodes beyond its string label
+- both trees must have exactly the same set of nodes, just arranged differently
+    - referring to the node labels
+- two metrics:
+    - sumoted: number of edits (local subtree moves)
+    - normalized: similarity measure $\in [0,1]$, such that 0 is same tree, 1 is the most different the tree could be given its configuration (max possible dist by rearranging nodes).
+
+RTED Robust Algorithm for TED (https://arxiv.org/abs/1201.0230)
+
+APTED (https://github.com/JoaoFelipe/apted) (https://dl.acm.org/doi/10.1145/2699485)
+
+
+additional ideas
+- define custom cost function that allows for a lower cost subtree move given some combination of inserts/deletes
+    - potentially compatible with RTED, APTED?
 
