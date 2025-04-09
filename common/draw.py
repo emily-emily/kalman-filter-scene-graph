@@ -47,6 +47,7 @@ def denormalize(bounding_box, width, height):
     Returns (x1, y1, x2, y2) relative to the original image.
     """
     y1, x1, y2, x2 = bounding_box
+    y1, x1, y2, x2 = int(y1), int(x1), int(y2), int(x2)
     res = [x1/1000 * width, y1/1000 * height, x2/1000 * width, y2/1000 * height]
     return (int(z) for z in res)
 
@@ -127,7 +128,7 @@ def draw_relationships(image, graph, label="full", color=None, font_size=None, l
 
     for i, (obj_id1, obj_id2, relation_id) in enumerate(graph["relations"]):
         if with_ids:
-            relation_name = id_bank["predicates"][relation_id][1]
+            relation_name = id_bank["predicates"][int(relation_id)][1]
         else:
             relation_name = relation_id
 
@@ -154,8 +155,8 @@ def draw_relationships(image, graph, label="full", color=None, font_size=None, l
 
         # get categories
         if with_ids:
-            c1 = graph["objects"][obj_id1]["category"]
-            c2 = graph["objects"][obj_id2]["category"]
+            c1 = int(graph["objects"][obj_id1]["category"])
+            c2 = int(graph["objects"][obj_id2]["category"])
 
             if c1 >= len(id_bank["objects"]) or c2 >= len(id_bank["objects"]):
                 if verbose:
@@ -166,8 +167,8 @@ def draw_relationships(image, graph, label="full", color=None, font_size=None, l
                 errors += 1
                 continue
 
-            category_name_1 = id_bank["objects"][obj_id1][1]
-            category_name_2 = id_bank["objects"][obj_id2][1]
+            category_name_1 = id_bank["objects"][c1][1]
+            category_name_2 = id_bank["objects"][c2][1]
         else:
             category_name_1 = graph["objects"][obj_id1]["category"]
             category_name_2 = graph["objects"][obj_id2]["category"]

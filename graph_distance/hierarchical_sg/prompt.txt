@@ -1,0 +1,18 @@
+Return a scene graph for this image in a JSON format.
+You should use a hierarchical format such that all objects are "in" or "on" the parent object.
+You must adhere to the following rules:
+
+1. Do not include any additional text.
+2. Use this JSON format:
+{
+    "id": 1,
+    "name": "category as a string",
+    "bbox": [y_min, x_min, y_max, x_max],
+    "attributes": ["string"],
+    "predicate": "on",
+    "children": [
+        // same format as above
+    ]
+}
+3. The scene graph should accurately represent the objects in the image and their relationships.
+4. The predicate should be either "root", "on", or "in".
